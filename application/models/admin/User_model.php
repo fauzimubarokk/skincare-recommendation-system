@@ -24,7 +24,22 @@ class User_model extends CI_Model
         return $query->row();
     }
 
-    public function insert_user($data) {
+    public function insert_user($data)
+    {
         return $this->db->insert('tb_pengguna', $data);
+    }
+
+    public function get_user_by_email($email)
+    {
+        $this->db->where('email', $email);
+        $query = $this->db->get('tb_pengguna');
+        return $query->row();
+    }
+
+    public function update_password($email, $new_password)
+    {
+        $this->db->set('password', sha1($new_password));
+        $this->db->where('email', $email);
+        return $this->db->update('tb_pengguna');
     }
 }

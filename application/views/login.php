@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Skincare</title>
-  <link rel="shortcut icon" type="image/png" href="<?= base_url() ?>assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="<?= base_url() ?>assets/images/logos/logo.png" />
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/styles.min.css" />
   <style>
     .btn-primary {
@@ -26,8 +26,8 @@
     }
 
     .text-primary {
-        --bs-text-opacity: 1;
-        color: #FF007F !important;
+      --bs-text-opacity: 1;
+      color: #FF007F !important;
     }
   </style>
 </head>
@@ -45,7 +45,7 @@
                 <?php if ($this->session->flashdata('error_message')) { ?>
                   <div class="alert-container">
                     <div id="myAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php echo $this->session->flashdata('error_message'); ?>
+                      <?php echo $this->session->flashdata('error_message'); ?>
                     </div>
                   </div>
                 <?php } ?>
@@ -53,7 +53,7 @@
                 <?php if ($this->session->flashdata('success_message')) { ?>
                   <div class="alert-container">
                     <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $this->session->flashdata('success_message'); ?>
+                      <?php echo $this->session->flashdata('success_message'); ?>
                     </div>
                   </div>
                 <?php } ?>

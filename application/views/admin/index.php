@@ -39,20 +39,20 @@
     }
 
     .btn-outline-primary {
-        --bs-btn-color: #fff;
-        --bs-btn-bg: #FC8EAC;
-        --bs-btn-border-color: #FC8EAC;
-        --bs-btn-hover-color: #fff;
-        --bs-btn-hover-bg: #FF007F;
-        --bs-btn-hover-border-color: #FF007F;
-        --bs-btn-focus-shadow-rgb: 117, 153, 255;
-        --bs-btn-active-color: #fff;
-        --bs-btn-active-bg: #FF007F;
-        --bs-btn-active-border-color: #4665bf;
-        --bs-btn-active-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
-        --bs-btn-disabled-color: #fff;
-        --bs-btn-disabled-bg: #5D87FF;
-        --bs-btn-disabled-border-color: #5D87FF;
+      --bs-btn-color: #fff;
+      --bs-btn-bg: #FC8EAC;
+      --bs-btn-border-color: #FC8EAC;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #FF007F;
+      --bs-btn-hover-border-color: #FF007F;
+      --bs-btn-focus-shadow-rgb: 117, 153, 255;
+      --bs-btn-active-color: #fff;
+      --bs-btn-active-bg: #FF007F;
+      --bs-btn-active-border-color: #4665bf;
+      --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      --bs-btn-disabled-color: #fff;
+      --bs-btn-disabled-bg: #5D87FF;
+      --bs-btn-disabled-border-color: #5D87FF;
     }
 
     .btn-primary {
@@ -73,8 +73,25 @@
     }
 
     .text-primary {
-        --bs-text-opacity: 1;
-        color: #FF007F !important;
+      --bs-text-opacity: 1;
+      color: #FF007F !important;
+    }
+
+    .btn-danger {
+      --bs-btn-color: #fff;
+      --bs-btn-bg: #dc3545;
+      --bs-btn-border-color: #dc3545;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #d5745b;
+      --bs-btn-hover-border-color: #dc3545;
+      --bs-btn-focus-shadow-rgb: 251, 155, 129;
+      --bs-btn-active-color: #fff;
+      --bs-btn-active-bg: #dc3545;
+      --bs-btn-active-border-color: #bc6750;
+      --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      --bs-btn-disabled-color: #fff;
+      --bs-btn-disabled-bg: #dc3545;
+      --bs-btn-disabled-border-color: #dc3545;
     }
   </style>
 </head>
@@ -101,7 +118,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Home</span>
             </li>
-            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'home'|| $this->uri->segment(1) == 'admin') ? 'selected' : ''; ?>">
+            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'home' || $this->uri->segment(1) == 'admin') ? 'selected' : ''; ?>">
               <a class="sidebar-link" href="<?= base_url() ?>home" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
@@ -110,49 +127,49 @@
               </a>
             </li>
             <?php if ($this->session->userdata('role') == "Admin") { ?>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Data Master</span>
-            </li>
-            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'skincare') ? 'selected' : ''; ?>">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">Skincare</span>
-              </a>
-            </li>
-            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'user') ? 'selected' : ''; ?>">
-              <a class="sidebar-link" href="<?= base_url() ?>user" aria-expanded="false">
-                <span>
-                  <i class="ti ti-mood-happy"></i>
-                </span>
-                <span class="hide-menu">Pengguna</span>
-              </a>
-            </li>
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Data Master</span>
+              </li>
+              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'skincare') ? 'selected' : ''; ?>">
+                <a class="sidebar-link" href="<?= base_url() ?>skincare" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-article"></i>
+                  </span>
+                  <span class="hide-menu">Skincare</span>
+                </a>
+              </li>
+              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'user') ? 'selected' : ''; ?>">
+                <a class="sidebar-link" href="<?= base_url() ?>user" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-mood-happy"></i>
+                  </span>
+                  <span class="hide-menu">Pengguna</span>
+                </a>
+              </li>
             <?php } ?>
 
             <?php if ($this->session->userdata('role') == "User") { ?>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Data Rekomendasi</span>
-            </li>
-            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'skincare') ? 'selected' : ''; ?>">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-mood-happy"></i>
-                </span>
-                <span class="hide-menu">Cek Rekomendasi</span>
-              </a>
-            </li>
-            <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'recom') ? 'selected' : ''; ?>">
-              <a class="sidebar-link" href="<?= base_url() ?>recom/history" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">Riwayat Rekomendasi</span>
-              </a>
-            </li>
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Data Rekomendasi</span>
+              </li>
+              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'skincare') ? 'selected' : ''; ?>">
+                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-mood-happy"></i>
+                  </span>
+                  <span class="hide-menu">Cek Rekomendasi</span>
+                </a>
+              </li>
+              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'recom') ? 'selected' : ''; ?>">
+                <a class="sidebar-link" href="<?= base_url() ?>recom/history" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-article"></i>
+                  </span>
+                  <span class="hide-menu">Riwayat Rekomendasi</span>
+                </a>
+              </li>
             <?php } ?>
 
           </ul>
@@ -176,14 +193,14 @@
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-             <b class="text-white"> Welcome : <?= $this->session->userdata('name'); ?></b> 
+              <b class="text-white"> Welcome : <?= $this->session->userdata('name'); ?></b>
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="<?= base_url() ?>/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
-                    <a href="<?= site_url('change-password')?>" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="<?= site_url('change-password') ?>" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-lock fs-6"></i>
                       <p class="mb-0 fs-3">Ubah Password</p>
                     </a>
@@ -224,6 +241,10 @@
     new DataTable('#example-table', {
       responsive: true
     });
+
+    setTimeout(function() {
+      $('#myAlert').alert('close');
+    }, 3000);
   </script>
 </body>
 

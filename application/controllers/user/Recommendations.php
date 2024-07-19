@@ -7,6 +7,11 @@ class Recommendations extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('auth');
+
+        if ($this->auth->check_login_is_user() == FALSE) {
+            redirect('login');
+        }
     }
 
     public function index()

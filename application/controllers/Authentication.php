@@ -29,6 +29,7 @@ class Authentication extends CI_Controller
                 "logged_in" => TRUE,
                 "name" => $user->nama,
                 "role" => $user->role,
+                "email" => $user->email,
             );
 
             $this->session->set_userdata($session);

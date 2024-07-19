@@ -12,7 +12,9 @@ class User extends CI_Controller
 
         $this->load->library('auth');
 
-        $this->auth->check_login();
+        if ($this->auth->check_login_is_admin() == FALSE) {
+            redirect('login');
+        }
     }
 
     public function index()

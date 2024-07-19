@@ -57,13 +57,16 @@ $route['user'] = 'admin/user';
 
 $route['home'] = 'main';
 $route['change-password'] = 'Main/change_password';
+$route['password-changed'] = 'Main/update_password';
 
 $route['logout'] = 'authentication/logout';
 $route['login'] = 'authentication';
 $route['register'] = 'authentication/register';
 
-$route['skincare'] = 'skincare';
-$route['skincare/:any'] = "skincare/view/$1";
+$route['skincare'] = 'admin/skincare';
+$route['skincare/insert'] = 'admin/skincare/insert';
+$route['skincare/update/(:num)'] = "admin/skincare/update/$1";
+$route['skincare/delete/(:num)'] = 'admin/skincare/delete/$1';
 
 $route['recom'] = 'user/recommendations';
 $route['recom/history'] = 'user/recommendations/history';
