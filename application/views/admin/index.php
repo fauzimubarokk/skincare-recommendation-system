@@ -154,15 +154,15 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Data Rekomendasi</span>
               </li>
-              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'skincare') ? 'selected' : ''; ?>">
-                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+              <li class="sidebar-item <?php echo ($this->uri->segment(2) == 'check') ? 'selected' : ''; ?>">
+                <a class="sidebar-link" href="<?= base_url() ?>recom/check" aria-expanded="false">
                   <span>
                     <i class="ti ti-mood-happy"></i>
                   </span>
                   <span class="hide-menu">Cek Rekomendasi</span>
                 </a>
               </li>
-              <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'recom') ? 'selected' : ''; ?>">
+              <li class="sidebar-item <?php echo ($this->uri->segment(2) == 'history') ? 'selected' : ''; ?>">
                 <a class="sidebar-link" href="<?= base_url() ?>recom/history" aria-expanded="false">
                   <span>
                     <i class="ti ti-article"></i>

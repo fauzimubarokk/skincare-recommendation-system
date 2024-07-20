@@ -14,7 +14,7 @@ class Auth
         $this->CI->load->library('session');
     }
 
-    private function is_logged_in()
+    public function is_logged_in()
     {
         return $this->CI->session->userdata('logged_in');
     }

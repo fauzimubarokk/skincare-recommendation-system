@@ -11,7 +11,7 @@ class Main extends CI_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->library(array('form_validation', 'auth'));
 
-		if ($this->auth->check_login_is_admin() == FALSE || !$this->auth->check_login_is_user() == FALSE) {
+		if ($this->auth->is_logged_in() == FALSE) {
 			redirect('login');
 		}
 	}
