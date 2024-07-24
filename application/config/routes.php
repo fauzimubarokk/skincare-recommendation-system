@@ -71,3 +71,4 @@ $route['skincare/delete/(:num)'] = 'admin/skincare/delete/$1';
 $route['recom'] = 'user/recommendations';
 $route['recom/history'] = 'user/recommendations/history';
 $route['recom/check'] = 'user/recommendations/check';
+$route['recom/process'] = 'user/recommendations/process';

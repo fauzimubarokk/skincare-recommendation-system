@@ -19,6 +19,17 @@ class Skincare_model extends CI_Model {
         return $query->result();
     }
 
+    public function get_all_skincare_by_type($id_jenis_skincare) {
+        $this->db->select('tb_skincare.*, tb_jenis_skincare.nama as jenis_skincare, tb_jenis_kulit.nama as jenis_kulit');
+        $this->db->from('tb_skincare');
+        $this->db->where('id_jenis_skincare', $id_jenis_skincare);
+        $this->db->join('tb_jenis_skincare', 'tb_skincare.id_jenis_skincare = tb_jenis_skincare.id');
+        $this->db->join('tb_jenis_kulit', 'tb_skincare.id_jenis_kulit = tb_jenis_kulit.id');
+        $this->db->order_by('merk', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function get_skincare_by_id($id) {
         $query = $this->db->get_where('tb_skincare', array('id' => $id));
         return $query->row();

@@ -7,9 +7,11 @@ class Recommendations extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('auth');
+        $this->load->model('admin/Skincare_model');
         $this->load->model("History_model");
-        $this->load->helper('url');
+        $this->load->library('auth');
+        $this->load->library('form_validation');
+        $this->load->helper(array('form', 'url'));
 
         if ($this->auth->check_login_is_user() == FALSE) {
             redirect('login');
@@ -35,12 +37,109 @@ class Recommendations extends CI_Controller
     {
         $data = array(
             'contents' => 'user/check_recommendation',
+            'skincare' => $this->Skincare_model->get_all_skincare(),
+            'jenis_skincare' => $this->Skincare_model->get_all_jenis_skincare(),
+            'jenis_kulit' => $this->Skincare_model->get_all_jenis_kulit(),
         );
 
         $this->load->view('admin/index', $data);
     }
 
-    private function get_recommendations()
+    public function process()
     {
+        $this->form_validation->set_rules('umur', 'Umur', 'required|greater_than[11]');
+        $this->form_validation->set_rules('id_jenis_skincare', 'Jenis Skincare', 'required');
+        $this->form_validation->set_rules('id_jenis_kulit', 'Jenis Kulit', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('recom/check');
+            return;
+        }
+
+        // get all skincare by type
+        $scType = $this->input->post('id_jenis_skincare');
+        $skincareList = $this->Skincare_model->get_all_skincare_by_type($scType);
+
+        // fuzzifikasi umur
+        $lowAge = 20;
+        $middleAge = 30;
+        $oldAge = 40;
+        $age = $this->input->post('umur');
+        
+        if ($age <= $lowAge) {
+            $ageIndexLow = 0;
+        } else if ($age >= $middleAge) {
+            $ageIndexLow = 1;
+        } else if ($age >= $lowAge && $age <= $middleAge){
+            $ageIndexLow = ($middleAge - $age) / ($middleAge - $lowAge);
+        }
+
+        if ($age < $lowAge && $age > $middleAge) {
+            $ageIndexMid = 0;
+        } else if ($age >= $middleAge && $age <= $oldAge) {
+            $ageIndexMid = 1;
+        } else if($age >= $lowAge && $age <= $middleAge){
+            $ageIndexMid = ($age - $lowAge) / ($middleAge - $lowAge);
+        }
+
+        if ($age >= $oldAge) {
+            $ageIndexOld = 1;
+        } else if ($age <= $middleAge) {
+            $ageIndexOld = 0;
+        } else if($age >= $middleAge && $age <= $oldAge){
+            $ageIndexOld = ($age - $middleAge) / ($oldAge - $middleAge);
+        }
+
+        $fuzzAge = array(
+            'ageIndexLow' => $ageIndexLow,
+            'ageIndexMid' => $ageIndexMid,
+            'ageIndexOld' => $ageIndexOld,
+        );
+
+        // fuzzifikasi jenis kulit
+        $lowSkin = 1;
+        $middleSkin = 2;
+        $highSkin = 3;
+        $skin = $this->input->post('id_jenis_kulit');
+        var_dump(json_encode($skin));
+        
+        if ($skin <= $lowSkin) {
+            $skinIndexLow = 0;
+        } else if ($skin >= $middleSkin) {
+            $skinIndexLow = 1;
+        } else if ($skin >= $lowSkin && $skin <= $middleSkin){
+            $skinIndexLow = ($middleSkin - $skin) / ($middleSkin - $lowSkin);
+        }
+
+        if ($skin < $lowSkin && $skin > $middleSkin) {
+            $skinIndexMid = 0;
+        } else if ($skin >= $middleSkin && $skin <= $highSkin) {
+            $skinIndexMid = 1;
+        } else if($skin >= $lowSkin && $skin <= $middleSkin){
+            $skinIndexMid = ($skin - $lowSkin) / ($middleSkin - $lowSkin);
+        }
+
+        if ($skin >= $highSkin) {
+            $skinIndexHigh = 1;
+        } else if ($skin <= $middleSkin) {
+            $skinIndexHigh = 0;
+        } else if($skin >= $middleSkin && $skin <= $highSkin){
+            $skinIndexHigh = ($skin - $middleSkin) / ($highSkin - $middleSkin);
+        }
+
+        $fuzzSkin = array(
+            'skinIndexLow' => $skinIndexLow,
+            'skinIndexMid' => $skinIndexMid,
+            'skinIndexHigh' => $skinIndexHigh,
+        );
+
+        $data = array(
+            'age' => $fuzzAge,
+            'skin' => $fuzzSkin,
+        );
+
+        var_dump(json_encode($data));
+
     }
 }
