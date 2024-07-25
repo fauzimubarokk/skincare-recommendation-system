@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 20, 2024 at 03:51 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost
+-- Generation Time: Jul 25, 2024 at 08:13 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tb_jenis_kulit` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_jenis_kulit`
@@ -50,7 +50,7 @@ INSERT INTO `tb_jenis_kulit` (`id`, `nama`) VALUES
 CREATE TABLE `tb_jenis_skincare` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_jenis_skincare`
@@ -75,7 +75,7 @@ CREATE TABLE `tb_pengguna` (
   `role` enum('Admin','User') DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_pengguna`
@@ -115,7 +115,7 @@ CREATE TABLE `tb_riwayat` (
   `id` int(11) NOT NULL,
   `id_pengguna` int(11) NOT NULL,
   `id_skincare` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_riwayat`
@@ -182,33 +182,50 @@ CREATE TABLE `tb_skincare` (
   `harga` int(11) NOT NULL,
   `id_jenis_skincare` int(11) DEFAULT NULL,
   `id_jenis_kulit` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_skincare`
 --
 
 INSERT INTO `tb_skincare` (`id`, `merk`, `detail`, `gambar`, `harga`, `id_jenis_skincare`, `id_jenis_kulit`) VALUES
-(1, 'Cetaphil Gentle Skin Cleanser', 'Pembersih wajah yang lembut untuk semua jenis kulit.', NULL, 10000, 1, 1),
-(2, 'Neutrogena Hydro Boost Water Gel', 'Gel pelembab yang ringan dan melembabkan kulit kering.', NULL, 15000, 2, 2),
-(3, 'CeraVe Hydrating Cleanser', 'Pembersih wajah yang menghidrasi untuk kulit normal hingga kering.', NULL, 20000, 1, 3),
-(4, 'La Roche-Posay Toleriane Hydrating Cleanser', 'Pembersih wajah untuk kulit sensitif dan kering.', NULL, 25000, 1, 1),
-(5, 'The Ordinary Niacinamide 10% + Zinc 1%', 'Serum yang mengurangi noda dan memperbaiki tekstur kulit.', NULL, 30000, 2, 2),
-(6, 'Paula’s Choice 2% BHA Liquid Exfoliant', 'Eksfolian yang efektif menghilangkan sel kulit mati.', NULL, 10000, 2, 3),
-(7, 'Olay Regenerist Micro-Sculpting Cream', 'Krim anti-aging yang memperbaiki tekstur kulit.', NULL, 15000, 2, 1),
-(8, 'Kiehl’s Ultra Facial Cream', 'Krim pelembab yang memberikan hidrasi sepanjang hari.', NULL, 20000, 2, 2),
-(9, 'Bioderma Sensibio H2O', 'Micellar water yang membersihkan dan menenangkan kulit sensitif.', 'flash.png', 29000, 1, 1),
-(10, 'Vichy Mineral 89', 'Booster harian yang memperkuat kulit dengan mineral dan hyaluronic acid.', NULL, 30000, 2, 1),
-(11, 'Laneige Water Sleeping Mask', 'Masker tidur yang memberikan hidrasi intensif sepanjang malam.', NULL, 10000, 2, 2),
-(12, 'Drunk Elephant C-Firma Day Serum', 'Serum vitamin C yang mencerahkan dan mengencangkan kulit.', NULL, 15000, 2, 3),
-(13, 'Skinceuticals C E Ferulic', 'Serum antioksidan yang melindungi kulit dari radikal bebas.', NULL, 20000, 2, 1),
-(14, 'Tatcha The Water Cream', 'Krim pelembab yang ringan dengan hasil akhir matte.', NULL, 25000, 2, 2),
-(16, 'First Aid Beauty Ultra Repair Cream', 'Krim pelembab yang kaya untuk kulit sangat kering.', NULL, 10000, 2, 1),
-(17, 'Glossier Milky Jelly Cleanser', 'Pembersih wajah yang lembut dan efektif membersihkan makeup.', NULL, 15000, 1, 2),
-(18, 'Mario Badescu Facial Spray', 'Spray wajah yang menyegarkan dan melembabkan kulit.', NULL, 20000, 2, 3),
-(19, 'Pixi Glow Tonic', 'Toner eksfoliasi yang mencerahkan kulit.', NULL, 25000, 2, 1),
-(20, 'Sunday Riley Good Genes', 'Treatment eksfoliasi yang memperbaiki tekstur dan kilau kulit.', NULL, 30000, 2, 2),
-(21, 'Test', 'ini test', 'gift.png', 30000, 1, 1);
+(1, 'Ms. Pimple Acne Solution Moisturizing Gel', 'Ms. Pimple Moisturizing Gel adalah teman sehari – harimu untuk\nmerawat kulitmu yang cenderung mudah jerawatan. Lawan\nbakteri penyebab timbulnya jerawat dan kurangi kemerahan\ndengan ekstrak Rosebay Willowherb. Mengandung SPF 15 untuk\nmelindungi kulit dari sinar UV sekaligus memberi kelembapan\npada kulit.\nIni merupakan produk skincare dari Emina Cosmectics', 'emina-ms-pimple-moisturizer.jpeg', 29700, 2, 3),
+(2, 'Beausta All In One', 'Pelembab all-in-one menggabungkan 3 produk sekaligus: toner, lotion, dan essence. Juga ditambahkan dengan: efek pmencerahkan, pelembab dan anti-penuaan. Cocok untuk semua jenis kulit.\n1.    Krim All-in-one: Serbaguna. menggabungkan manfaat toner, lotion, & essence dalam satu produk.\n2.     Pemutih, Anti Kerut: Adenosin dan Niacinamide membuat warna kulit cerah dan elastis\n3.  Triple Moisture: Teksturnya berubah dari lotion menjadi essence yang membuat kulit lembab dan segar. Isi : 1 sachet 20ml Bahan Utama: Asam Hyaluronic, Adenosin, Niacinamide', 'beausta-all-in-one.jpg', 21000, 2, 3),
+(3, 'Kojie.San', 'Formula Baru dengan Hydromoist Dual Cream bisa digunakan untuk Siang dan Malam. Berfungsi untuk mencerahkan, melembabkan tanpa membuat wajah berminyak, serta meratakan warna kulit. Mengandung ekstrak tumbuhan untuk melembabkan, melembutkan, dan mengencangkan kulit wajah serta kojic acid untuk mencerahkan warna kulit', 'kojiesan.jpeg', 51000, 2, 3),
+(4, 'Azarine', 'Formula Baru dengan Hydromoist Dual Cream bisa digunakan \nuntuk membersihkan jerawat dan mengontrol sebum\nDiformulasikan dengan bahan alami purslane, madu dan asam \nsalisilat membantu mencegah pertumbuhan bakteri penyebab \njerawat, mengangkat kelebihan minyak pada wajah dan \nmengecilkan pori- pori.', 'azarine.jpeg', 35000, 2, 3),
+(5, 'Complex Night Cream', 'Complex Night Cream formula bahan yang terbukti secara klinis untuk meningkatkan keteguhan kulit, Pengelupasan lembut, Hidrasi dalam, dan kulit Iritasi, CNC Day Lift berbeda dari alternatif krim  anti kerut lainnya karena dibuat dengan formula khusus yang menggabungkan tiga bahan utama dengan hasil yang terbukti.', 'complex-night-cream.jpg', 318000, 2, 3),
+(6, 'BioaQua', 'Selain mengandung 7x Ceramide,Produk ini memiliki ingredient \nutama yang lainnya. Centella Asiatica yang bermanfaat untuk \nmeningkatkan kada sebum atau minyak alami kulit, sehingga \nkelembapankulit dapat terjaga. Moisturizing ini juga mengandung \nWitch Hazel, serta Citrus Extract', 'bioaqua.jpeg', 57500, 2, 3),
+(7, 'Bioderma', 'Bioderma Sebium Global 30 ml produk perawatan wajah yang \ndapat mengurangi jerawat dan komedo. Produk ini bekerja secara \nbiologis melawan langsung penyebab jerawat dan komedo \ntersebut. Selain melawan penyebab jerawat, produk ini juga \nmelawan akibat jerawat dengan cara mengurangi kemerahan \nakibat peradangan dan menghaluskan kulit.', 'bioderma.jpeg', 300000, 2, 3),
+(8, 'Scarlet', 'Kandungan ceramide di dalam produk pelembap wajah Scarlett itu memberi \nbanyak manfaat untuk kulit, di antaranya menjaga kelembapan kulit,\nmembantu merawat skin barrier, mencegah tanda penuaan, sampai membantu \nmenghaluskan kulit.', 'scarlet.jpeg', 67000, 2, 1),
+(9, 'Safi', 'Membantu mencerahkan, menyejukkan, menyamankan kulit wajah\nmembantu menyamaratakan warna kulit wajah serta memberikan \nkelembaban sepanjang malam.', 'safi.jpeg', 60500, 2, 1),
+(10, 'Trueve', 'Moisturizer Gel Ini memiliki empat manfaat utama yaitu mampu menghidrasi\nkulit selama 24 jam, mencegah tanda penuaan dini, melindungi skin barirrier.', 'trueve.jpeg', 198700, 2, 1),
+(11, 'L\'oreal', 'krim malam yang menandingi treatment laser. Manfaat produk :\nperawatan pencerahan kulit yang teruji VS treatment laser. Mencegah timbulnya\nnoda hitam, pori-pori tersamarkan.', 'loreal.png', 221600, 2, 1),
+(12, 'Pinkberry', 'Pinkberry Gel moisturizer ringan yang memberikan kelembapan dan \nmembantu melindungi moisture barrier untuk kulit yang sehat, halus, dan \nglowing.', 'pinkberry.jpeg', 27900, 2, 1),
+(13, 'Bioderma', 'Bioderma Sebium Global 30 ml produk perawatan wajah yang \ndapat mengurangi jerawat dan komedo. Produk ini bekerja secara \nbiologis melawan langsung penyebab jerawat dan komedo \ntersebut. Selain melawan penyebab jerawat, produk ini juga \nmelawan akibat jerawat dengan cara mengurangi kemerahan \nakibat peradangan dan menghaluskan kulit.', 'bioderma.jpeg', 300000, 2, 1),
+(14, 'Beausta All In One', 'Pelembab all-in-one menggabungkan 3 produk sekaligus: toner, lotion, dan essence. Juga ditambahkan dengan: efek pmencerahkan, pelembab dan anti-penuaan. Cocok untuk semua jenis kulit.\n1.    Krim All-in-one: Serbaguna. menggabungkan manfaat toner, lotion, & essence dalam satu produk.\n2.     Pemutih, Anti Kerut: Adenosin dan Niacinamide membuat warna kulit cerah dan elastis\n3.  Triple Moisture: Teksturnya berubah dari lotion menjadi essence yang membuat kulit lembab dan segar. Isi : 1 sachet 20ml Bahan Utama: Asam Hyaluronic, Adenosin, Niacinamide', 'beausta-all-in-one.jpg', 29900, 2, 1),
+(15, 'Inez', 'Pelembab wajah untuk kulit normal cenderung kering, dan membantu \nmempertahankan kelembabab kulit', 'inez.jpeg', 32800, 2, 2),
+(16, 'Nature-E', 'Vitamin E dalam bentuk e-beads efektif meresap ke dalam kulit untuk \nmemberikan wajahmu kelembapan dan perlindungan dari sinar matahari.', 'nature.jpeg', 38000, 2, 2),
+(17, 'Wardah', 'Antioksidan , Membantu mencerahkan wajah ,Menjaga kelmebaban kulit. Untuk \nmenjaga kelembapan kulit dan menjaga teksturnya biar tetap lembut untuk \ndipegang. Kulit yang lebih glowing dan segar sehat.', 'wardah.jpg', 32700, 2, 2),
+(18, 'Whitelab', 'Whitelab Sleeping Mask merupakan sleeping mask yang diformulasikan\ndengan kekuatan 3 kandungan utama HyaluComplex-10, Panthenol, dan Grape \nFruit Extract yang dapat secara sinergis membantu melembapkan, \nmeningkatkan, dan mempertahankan level hidrasi kulit, serta merawat dan \nmempertahankan fungsi skin barrier wajah.', 'whitelab.jpeg', 47750, 2, 2),
+(19, 'Bioderma', 'Bioderma Sebium Global 30 ml produk perawatan wajah yang \ndapat mengurangi jerawat dan komedo. Produk ini bekerja secara \nbiologis melawan langsung penyebab jerawat dan komedo \ntersebut. Selain melawan penyebab jerawat, produk ini juga \nmelawan akibat jerawat dengan cara mengurangi kemerahan \nakibat peradangan dan menghaluskan kulit.', 'bioderma.jpeg', 190000, 2, 2),
+(20, 'Beausta All In One', 'Pelembab all-in-one menggabungkan 3 produk sekaligus: toner, lotion, dan essence. Juga ditambahkan dengan: efek pmencerahkan, pelembab dan anti-penuaan. Cocok untuk semua jenis kulit.\n1.    Krim All-in-one: Serbaguna. menggabungkan manfaat toner, lotion, & essence dalam satu produk.\n2.     Pemutih, Anti Kerut: Adenosin dan Niacinamide membuat warna kulit cerah dan elastis\n3.  Triple Moisture: Teksturnya berubah dari lotion menjadi essence yang membuat kulit lembab dan segar. Isi : 1 sachet 20ml Bahan Utama: Asam Hyaluronic, Adenosin, Niacinamide', 'beausta-all-in-one.jpg', 29900, 2, 2),
+(21, 'Cetaphile', 'Membantu membersihkan kulit wajah dari minyak, kotoran, dan sisamake \nup Kelebihan: Non-comedogenicsehingga tidak akan menyumbat pori \nFormulapH-balanceddan bebas sabun Terasa ringan di kulit Aman \ndigunakan secara rutin GunakanCetaphil Oily Skin Cleanser 125mlyang \nsecara efektif membersihkan kulit wajah Anda.', 'cetaphile.jpeg', 236400, 1, 2),
+(22, 'Wardah Lightening Micellar Gentle Wash ', 'Wardah Lightening Micellar Gentle Wash, inovasi baru pembersih wajah \ndengan Non Soap Formula, bersihkan wajah dengan lembut sekaligus jaga \nkelembaban kulit tanpa meninggalkan kesan kesat.', 'wardah-lightening-micellar-gentle-wash.jpeg', 22500, 1, 2),
+(23, 'Whitelab Brightening Facial Wash', '-Niacinamide berperan untuk mencerahkan kulit, melembabkan kulit, \nCollagen berperan penting untuk meningkatkan elastisitas kulit dan mencegah kulit kusam', 'whitelab-brightening-facial-wash.jpeg', 42200, 1, 2),
+(24, 'Azarine', 'Azarine Acne Gentle Cleansing Foam adalah pembersih wajah untuk \nmembersihkan jerawat dan mengontrol sebum. Diformulasikan dengan \nbahan alami purslane, madu dan asam salisilat membantu mencegah \npertumbuhan bakteri penyebab jerawat, mengangkat kelebihan minyak \npada wajah dan mengecilkan pori- pori.', 'azarine.jpeg', 35000, 1, 2),
+(25, 'Ponds', 'POND?S White Beauty Spot-less Rosy White Daily Facial Foam teruji klinis \nmenyamarkan noda hitam dalam 2 minggu. Untuk kulit tampak putih merona \nnoda tersamarkan setiap hari* (*gunakan secara teratur minimal 2 kali sehari).', 'ponds.jpg', 23800, 1, 2),
+(26, 'Cetaphile', 'Membantu membersihkan kulit wajah dari minyak, kotoran, dan sisamake \nup Kelebihan: Non-comedogenicsehingga tidak akan menyumbat pori \nFormulapH-balanceddan bebas sabun Terasa ringan di kulit Aman \ndigunakan secara rutin GunakanCetaphil Oily Skin Cleanser 125mlyang \nsecara efektif membersihkan kulit wajah Anda.', 'cetaphile.jpeg', 236400, 1, 3),
+(27, 'Emina Ms. Pimple Acne Solution', 'Jangan biarkan jerawat semakin parah dengan bantuan Acne-Duo Care\nBersihkan wajah Anda dengan Emina Ms. Pimple Face Wash untuk \nmenghilangkan kotoran dan mengurangi minyak berlebih. Kulit terasa \ndigunakan secara rutin GunakanCetaphil Oily Skin Cleanser 125mlyang \nbersih dan segar tanpa membuatnya kering.', 'emina-ms-pimple-acne-solution.jpeg', 22000, 1, 3),
+(28, 'Safi White Expert', 'Membantu membersikan debu dan sisa make up secara seksama dengan \nscrub lembutnya, membantu melindungi kulit dari paparan radikal bebas, \nmembantu menjaga keseimbangan Ph kulit, serta menyegarkan kulit wajah.', 'safi-white-expert.jpeg', 57900, 1, 3),
+(29, 'Wardah', 'Inovasi terbaru dari Wardah, kini hadir foam pencerah yang bersihkan \nwajah dari kotoran dan debu secara menyeluruh sekaligus melembapkan \ndan melembutkan kulit untuk wajah tampak cerah, lembut, dan glowing.', 'wardah.jpeg', 20700, 1, 3),
+(30, 'Azarine Acne Gentle Cleansing', 'Azarine Acne Gentle Cleansing Foam adalah pembersih wajah untuk \nmembersihkan jerawat dan mengontrol sebum. Diformulasikan dengan \nbahan alami purslane, madu dan asam salisilat membantu mencegah \npertumbuhan bakteri penyebab jerawat, mengangkat kelebihan minyak \npada wajah dan mengecilkan pori- pori.', 'azarine-acne-gentle-cleansing.jpg', 35000, 1, 3),
+(31, 'Himalaya Face Wash Purifying Neem ', 'Himalaya Herbal Purifying Neem Face Wash diformulasikan khusus untuk \nmembuat kulit Anda cerah dan bebas masalah, busa pembersih wajah bebas \nsabun yang dapat digunakan setiap hari ini dioleskan dengan lembut pada \nwajah Anda untuk menghilangkan kelebihan minyak dan kotoran tanpa \nmenjadikan kulit Anda kering.', 'himalaya-face-wash-purifying-neem.png', 32340, 1, 1),
+(32, 'Pixy', 'Sabun pembersih wajah berbahan dasar air yang segar, ringan, serta \nmembuat kulit terasa halus dan lembut. Mengurangi tanda-tanda kulit lelah \nseperti kusam, kering, dan berminyak. Mengandung Hydra Active yang \nmelembabkan kulit dan Natural Whitening Extract yang membantu melembabkan kulit', 'pixy.jpeg', 31000, 1, 1),
+(33, 'Hada Labo', 'Hada Labo Gokujyun Face Wash merupakan sabun pembersih wajah dengan 2 \ntipe Hyaluronic Acid yang mampu mengangkat kotoran dan minyak di wajah \ntanpa menyebabkan kulit menjadi kering dan tetap terasa lembap.', 'hado-labo.jpeg', 29500, 1, 1),
+(34, 'Senka', 'Facial foam terbaru dari Senka dapat membantu membersihkan kotoran pada \nkulit wajah, menjaga kelembapan dan memberikan nutrisi. Diperkaya dengan \nDamask Rose Water untuk menenangkan dan menghidrasi kulit wajah, dan \nmemberikan efek kulit lembut', 'senka.jpeg', 57800, 1, 1),
+(35, 'St Ives', 'ST IVES FRESH SKIN APRICOT FACE SCRUB merupakan scrub wajah \ndari kandungan bubuk cangkang kenari alami yang menjadikan kulit menjadi \nlembut, halus, dan bercahaya. Produk ini digunakan untuk mengeksfoliasi \nkulit atau mengangkat sel kulit mati agar kulit wajah halus dan cerah ', 'st-ives.jpeg', 74700, 1, 1),
+(36, 'Safi Facial Wash', 'Safi White Natural Anti Acne Cleanser Tea Tree Oil Original. Pembersih \nwajah yang mengandung Tea Tree Oil Extract dan Aloe Extract yang \ndapat membersihkan sisa kotoran dan sebum di wajah.', 'safi-facial-wash.jpeg', 36800, 1, 1),
+(37, 'Somethinc Low PH Jelly Cleanser', 'Pembersih wajah berbahan vegan dengan tekstur jelly & gentle, \ndiformulasikan dengan Japanese Mugwort & Tea Tree. Somethinc facial \nwash ini teruji klinis menyimbangkan pH kulit tanpa membuat kulit kering, \ntertarik & merusak barier kulit.', 'somethinc-low-ph-jelly-cleanser.jpeg', 108900, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -280,7 +297,7 @@ ALTER TABLE `tb_riwayat`
 -- AUTO_INCREMENT for table `tb_skincare`
 --
 ALTER TABLE `tb_skincare`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- Constraints for dumped tables

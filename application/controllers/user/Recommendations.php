@@ -68,17 +68,17 @@ class Recommendations extends CI_Controller
         $age = $this->input->post('umur');
         
         if ($age <= $lowAge) {
-            $ageIndexLow = 0;
-        } else if ($age >= $middleAge) {
             $ageIndexLow = 1;
+        } else if ($age >= $middleAge) {
+            $ageIndexLow = 0;
         } else if ($age >= $lowAge && $age <= $middleAge){
             $ageIndexLow = ($middleAge - $age) / ($middleAge - $lowAge);
         }
 
-        if ($age < $lowAge && $age > $middleAge) {
+        if ($age < $lowAge || $age > $oldAge) {
             $ageIndexMid = 0;
         } else if ($age >= $middleAge && $age <= $oldAge) {
-            $ageIndexMid = 1;
+            $ageIndexMid = ($oldAge - $age) / ($oldAge - $middleAge);
         } else if($age >= $lowAge && $age <= $middleAge){
             $ageIndexMid = ($age - $lowAge) / ($middleAge - $lowAge);
         }
@@ -102,12 +102,11 @@ class Recommendations extends CI_Controller
         $middleSkin = 2;
         $highSkin = 3;
         $skin = $this->input->post('id_jenis_kulit');
-        var_dump(json_encode($skin));
         
         if ($skin <= $lowSkin) {
-            $skinIndexLow = 0;
-        } else if ($skin >= $middleSkin) {
             $skinIndexLow = 1;
+        } else if ($skin >= $middleSkin) {
+            $skinIndexLow = 0;
         } else if ($skin >= $lowSkin && $skin <= $middleSkin){
             $skinIndexLow = ($middleSkin - $skin) / ($middleSkin - $lowSkin);
         }
@@ -122,7 +121,7 @@ class Recommendations extends CI_Controller
 
         if ($skin >= $highSkin) {
             $skinIndexHigh = 1;
-        } else if ($skin <= $middleSkin) {
+        } else if ($skin < $middleSkin) {
             $skinIndexHigh = 0;
         } else if($skin >= $middleSkin && $skin <= $highSkin){
             $skinIndexHigh = ($skin - $middleSkin) / ($highSkin - $middleSkin);
@@ -139,7 +138,114 @@ class Recommendations extends CI_Controller
             'skin' => $fuzzSkin,
         );
 
-        var_dump(json_encode($data));
+        if($age <= $lowAge) {
+            $ageIndex = 1;
+        } else if($age <= $middleAge && $age > $lowAge) {
+            $ageIndex = 2;
+        } else if($age > $middleAge) {
+            $ageIndex = 3;
+        }
 
+        $rules = $this->generateRules($fuzzAge, $fuzzSkin);
+        $resultIndex = $this->deffuzifikasi($rules);
+
+        var_dump(json_encode($resultIndex));
+
+    }
+
+    public function generateRules($fuzzAge, $fuzzSkin) {
+        // Rules Table
+        // if ($ageIndex == 1 && $skin == 1) {
+        //     $resultIndex = 40;
+        // } else if($ageIndex == 2 && $skin == 1) {
+        //     $resultIndex = 40;
+        // } else if($ageIndex == 3 && $skin == 1) {
+        //     $resultIndex = 20;
+        // } else if ($ageIndex == 1 && $skin == 2) {
+        //     $resultIndex = 100;
+        // } else if($ageIndex == 2 && $skin == 2) {
+        //     $resultIndex = 80;
+        // } else if($ageIndex == 3 && $skin == 2) {
+        //     $resultIndex = 80;
+        // } else if ($ageIndex == 1 && $skin == 3) {
+        //     $resultIndex = 60;
+        // } else if($ageIndex == 2 && $skin == 3) {
+        //     $resultIndex = 20;
+        // } else if($ageIndex == 3 && $skin == 3) {
+        //     $resultIndex = 40;
+        // }
+
+        $rules = array(
+            0 => array(
+                "k1" => $fuzzAge['ageIndexLow'],
+                "k2" => $fuzzSkin['skinIndexLow'],
+                "p" => min($fuzzAge['ageIndexLow'], $fuzzSkin['skinIndexLow']),
+                "z" => 40,
+            ),
+            1 => array(
+                "k1" => $fuzzAge['ageIndexMid'],
+                "k2" => $fuzzSkin['skinIndexLow'],
+                "p" => min($fuzzAge['ageIndexMid'], $fuzzSkin['skinIndexLow']),
+                "z" => 20,
+            ),
+            2 => array(
+                "k1" => $fuzzAge['ageIndexOld'],
+                "k2" => $fuzzSkin['skinIndexLow'],
+                "p" => min($fuzzAge['ageIndexOld'], $fuzzSkin['skinIndexLow']),
+                "z" => 20,
+            ),
+            3 => array(
+                "k1" => $fuzzAge['ageIndexLow'],
+                "k2" => $fuzzSkin['skinIndexMid'],
+                "p" => min($fuzzAge['ageIndexLow'], $fuzzSkin['skinIndexMid']),
+                "z" => 100,
+            ),
+            4 => array(
+                "k1" => $fuzzAge['ageIndexMid'],
+                "k2" => $fuzzSkin['skinIndexMid'],
+                "p" => min($fuzzAge['ageIndexMid'], $fuzzSkin['skinIndexMid']),
+                "z" => 80,
+            ),
+            5 => array(
+                "k1" => $fuzzAge['ageIndexOld'],
+                "k2" => $fuzzSkin['skinIndexMid'],
+                "p" => min($fuzzAge['ageIndexOld'], $fuzzSkin['skinIndexMid']),
+                "z" => 80,
+            ),
+            6 => array(
+                "k1" => $fuzzAge['ageIndexLow'],
+                "k2" => $fuzzSkin['skinIndexHigh'],
+                "p" => min($fuzzAge['ageIndexLow'], $fuzzSkin['skinIndexHigh']),
+                "z" => 60,
+            ),
+            7 => array(
+                "k1" => $fuzzAge['ageIndexMid'],
+                "k2" => $fuzzSkin['skinIndexHigh'],
+                "p" => min($fuzzAge['ageIndexMid'], $fuzzSkin['skinIndexHigh']),
+                "z" => 20,
+            ),
+            8 => array(
+                "k1" => $fuzzAge['ageIndexOld'],
+                "k2" => $fuzzSkin['skinIndexHigh'],
+                "p" => min($fuzzAge['ageIndexOld'], $fuzzSkin['skinIndexHigh']),
+                "z" => 40,
+            ),
+            
+        );
+        
+
+        return $rules;
+    }
+
+    public function deffuzifikasi($rules) {
+        $zTotal = 0;
+        $pTotal = 0;
+
+        foreach($rules as $r) {
+            $zTotal += $r["p"] * $r["z"];
+            $pTotal += $r["p"];
+        }
+
+        return $zTotal / $pTotal;
     }
 }
