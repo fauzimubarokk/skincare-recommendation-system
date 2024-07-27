@@ -5,8 +5,9 @@
     </div>
     <div class="card-body">
     <?php if ($this->session->flashdata('success')) : ?>
-          <div id="myAlert" class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
-        <?php endif; ?>
+          <!-- <div id="myAlert" class="alert alert-success"><?= $this->session->flashdata('success'); ?>
+        </div> -->
+      <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
           <div id="myAlert" class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
         <?php endif; ?>
@@ -33,6 +34,25 @@
         </div>
         <button type="submit" class="btn btn-primary">Cek Rekomendasi</button>
       </form>
+    </div>
+  </div>
+</div>
+<!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLabel">Hasil Rekomendasi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
