@@ -5,8 +5,41 @@
     </div>
     <div class="card-body">
     <?php if ($this->session->flashdata('success')) : ?>
-          <!-- <div id="myAlert" class="alert alert-success"><?= $this->session->flashdata('success'); ?>
-        </div> -->
+        <!-- Result Modal -->
+        <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">Hasil Rekomendasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <?php
+              foreach($this->session->flashdata('success') as $data): ?>
+                <div class="card" style="width: 18rem;">
+                  <img src="<?= base_url('uploads/' . $data->gambar); ?>" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text"><?= $data->detail ?></p>
+                  </div>
+                </div>
+              </div>
+              <?php 
+              endforeach; ?>
+            </div>
+          </div>
+        </div>
+
+        <script src="<?= base_url() ?>assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="<?= base_url() ?>assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+          window.onload = showResultModal(); // call function with parameters on page load
+          function showResultModal() {
+              var myModal = new bootstrap.Modal(document.getElementById("resultModal"), {});
+              document.onreadystatechange = function () {
+                myModal.show();
+              };
+            }
+        </script>
       <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
           <div id="myAlert" class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
@@ -34,25 +67,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Cek Rekomendasi</button>
       </form>
-    </div>
-  </div>
-</div>
-<!-- Result Modal -->
-<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="resultModalLabel">Hasil Rekomendasi</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

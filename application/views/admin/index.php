@@ -245,17 +245,6 @@
     setTimeout(function() {
       $('#myAlert').alert('close');
     }, 3000);
-
-    window.onload = showModal(); // call function with parameters on page load
-    function showModal() {
-      var modal =  document.getElementById('resultModal');
-      if(modal == null) {
-        alert("modal is null");
-        return;
-      }
-
-      modal.show()
-    }
   </script>
 </body>
 
