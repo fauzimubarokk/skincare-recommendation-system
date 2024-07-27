@@ -59,7 +59,8 @@ class Recommendations extends CI_Controller
 
         // get all skincare by type
         $scType = $this->input->post('id_jenis_skincare');
-        $skincareList = $this->Skincare_model->get_all_skincare_by_type($scType);
+        $skinType = $this->input->post('id_jenis_kulit');
+        $skincareList = $this->Skincare_model->get_all_skincare_by_type($scType, $skinType);
 
         // fuzzifikasi umur
         $lowAge = 20;
@@ -138,18 +139,39 @@ class Recommendations extends CI_Controller
             'skin' => $fuzzSkin,
         );
 
-        if($age <= $lowAge) {
-            $ageIndex = 1;
-        } else if($age <= $middleAge && $age > $lowAge) {
-            $ageIndex = 2;
-        } else if($age > $middleAge) {
-            $ageIndex = 3;
-        }
-
         $rules = $this->generateRules($fuzzAge, $fuzzSkin);
         $resultIndex = $this->deffuzifikasi($rules);
 
-        var_dump(json_encode($resultIndex));
+        $productLowIndex = 40;
+        $productHighIndex = 60;
+
+        $skincareIndexLowDivider = 3;
+        $skincareIndexMidDivider = 3;
+        $skincareIndexHighDivider = 3;
+
+        if(count($skincareList) % 3 == 0) {
+            $skincareIndexLowDivider = count($skincareList) / 3;
+            $skincareIndexMidDivider = count($skincareList) / 3;
+            $skincareIndexHighDivider = count($skincareList) / 3;
+        } else {
+            $skincareIndexLowDivider = ceil(count($skincareList) / 3);
+            $skincareIndexMidDivider = ceil(count($skincareList)) / 3;
+            $skincareIndexHighDivider = count($skincareList) - $skincareIndexLowDivider - $skincareIndexMidDivider;
+        }
+
+        if($resultIndex <= $productLowIndex) {
+            // rekomendasi skincare mahal
+            $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider);
+        } else if($resultIndex <= $productHighIndex && $resultIndex > $productLowIndex) {
+            // rekomendasi skincare menengah
+            $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider, $skincareIndexMidDivider);
+        } else if($resultIndex > $productHighIndex){
+            // rekomendasi skincare murah
+            $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider + $skincareIndexMidDivider, $skincareIndexHighDivider);
+        }
+
+        $this->session->set_flashdata('success', $resultRecomendationList);
+        redirect('recom/check');
 
     }
 

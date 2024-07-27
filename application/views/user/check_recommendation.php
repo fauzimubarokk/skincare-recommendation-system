@@ -4,6 +4,9 @@
       <h4 class="card-title text-primary">Cek Rekomendasi Skincare</h4>
     </div>
     <div class="card-body">
+    <?php if ($this->session->flashdata('success')) : ?>
+          <div id="myAlert" class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
           <div id="myAlert" class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
         <?php endif; ?>
