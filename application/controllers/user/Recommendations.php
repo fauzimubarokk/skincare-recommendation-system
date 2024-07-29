@@ -8,6 +8,7 @@ class Recommendations extends CI_Controller
     {
         parent::__construct();
         $this->load->model('admin/Skincare_model');
+        $this->load->model('admin/User_model');
         $this->load->model("History_model");
         $this->load->library('auth');
         $this->load->library('form_validation');
@@ -170,7 +171,19 @@ class Recommendations extends CI_Controller
             $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider + $skincareIndexMidDivider, $skincareIndexHighDivider);
         }
 
-        // TODO : save to history table
+        $userSession = $this->session->get_userdata();
+        $user = $this->User_model->get_user_by_email($userSession["email"]);
+
+        // save to history table
+        foreach ($resultRecomendationList as $recomendation) {
+
+            $data = array(
+                'id_pengguna' => $user->id,
+                'id_skincare' => $recomendation->id,
+            );
+
+            $this->History_model->insert_history($data);
+        }
 
         $this->session->set_flashdata('success', $resultRecomendationList);
         redirect('recom/check');

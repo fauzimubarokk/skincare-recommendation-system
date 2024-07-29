@@ -29,4 +29,8 @@ class History_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function insert_history($data) {
+        return $this->db->insert('tb_riwayat', $data);
+    }
 }
