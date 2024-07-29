@@ -142,8 +142,8 @@ class Recommendations extends CI_Controller
         $rules = $this->generateRules($fuzzAge, $fuzzSkin);
         $resultIndex = $this->deffuzifikasi($rules);
 
-        $productLowIndex = 40;
-        $productHighIndex = 60;
+        $productLowIndex = 30;
+        $productHighIndex = 50;
 
         $skincareIndexLowDivider = 3;
         $skincareIndexMidDivider = 3;
@@ -161,7 +161,7 @@ class Recommendations extends CI_Controller
 
         if($resultIndex <= $productLowIndex) {
             // rekomendasi skincare mahal
-            $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider);
+            $resultRecomendationList = array_slice($skincareList, 0, $skincareIndexLowDivider);
         } else if($resultIndex <= $productHighIndex && $resultIndex > $productLowIndex) {
             // rekomendasi skincare menengah
             $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider, $skincareIndexMidDivider);
@@ -169,6 +169,8 @@ class Recommendations extends CI_Controller
             // rekomendasi skincare murah
             $resultRecomendationList = array_slice($skincareList, $skincareIndexLowDivider + $skincareIndexMidDivider, $skincareIndexHighDivider);
         }
+
+        // TODO : save to history table
 
         $this->session->set_flashdata('success', $resultRecomendationList);
         redirect('recom/check');
