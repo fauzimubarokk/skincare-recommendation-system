@@ -19,6 +19,11 @@ class Skincare_model extends CI_Model {
         return $query->result();
     }
 
+    /*
+    Fungsi untuk mengambil data skincare di database. Yang difilter berdasarkan id_jenis_skincare
+    serta id_kulit yang diperlukan. Data yang dikeluarkan diurutkan berdasarkan harga descending
+    atau dari yang paling besar ke yang paling kecil
+    */
     public function get_all_skincare_by_type($id_jenis_skincare, $id_skin) {
         $this->db->select('tb_skincare.*, tb_jenis_skincare.nama as jenis_skincare, tb_jenis_kulit.nama as jenis_kulit');
         $this->db->from('tb_skincare');

@@ -4,6 +4,10 @@
       <h4 class="card-title text-primary">Cek Rekomendasi Skincare</h4>
     </div>
     <div class="card-body">
+    <!-- 
+      Jika session memiliki attribut dengan key 'success' 
+      maka tampilkan modal yang berisi produk rekomendasi
+    -->  
     <?php if ($this->session->flashdata('success')) : ?>
         <!-- Result Modal -->
         <div class="modal fade modal-lg" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
@@ -17,6 +21,10 @@
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-md-12 ms-auto">
+                      <!-- 
+                      Looping semua data dan menampilkannya dalam bentuk card yang berisi nama produk, gambar,
+                      serta detail produk.
+                    -->
                     <?php
                     $index = 1;
                     foreach($this->session->flashdata('success') as $data): ?>
